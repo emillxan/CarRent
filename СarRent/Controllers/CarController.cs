@@ -6,12 +6,12 @@ namespace CarRent.Controllers
 {
     public class CarController : Controller
     {
-/*        private readonly ICarRepository _carRepository;
+      private readonly ICarRepository _carRepository;
 
         public CarController(ICarRepository carRepository)
         {
             _carRepository = carRepository;
-        }*/
+        }
 
         // GET: CarController
         public ActionResult Index()

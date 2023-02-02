@@ -6,6 +6,11 @@ using Microsoft.Extensions.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("MvcMovieContext")));
+
+builder.Services.AddScoped<ICarRepository, CarRepository>();
+
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
@@ -18,13 +23,11 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
-/*
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("MvcMovieContext")));
 
-builder.Services.AddScoped<ICarRepository, CarRepository>();*/
 
-void ConfigureServices(IServiceCollection services)
+
+
+/*void ConfigureServices(IServiceCollection services)
 {
     services.AddControllersWithViews();
 
@@ -33,7 +36,7 @@ void ConfigureServices(IServiceCollection services)
 
     services.AddScoped<ICarRepository, CarRepository>();
 }
-
+*/
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
