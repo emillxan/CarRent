@@ -1,0 +1,71 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Car_Rent</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Car_Rent.styles.css" asp-append-version="true" />
+</head>
+<body>
+    @RenderBody()
+    <footer class="container">
+        <ul class="footer-top">
+            <li class="first">
+                <img class="logo" src="https://demo1.leotheme.com/leo_rent_car_demo/img/leo-rent-car-logo-1533114693.jpg" alt="">
+                <ul>
+                    <li><span>LOCATION</span><p>No2 - 29th floor - 221b Baker street -<br>London - United Kingdom</p></li>
+                    <li><span>CALL US</span><p>(+01). 123. 456. 789</p></li>
+                    <li><span>SUPPORT MAIL</span><p>demo@demo.com</p></li>
+                </ul>
+            </li>
+            <li class="second">
+                <b>Latest news</b>
+                <ul class="latest-news__card">
+                    <li>
+                        <img src="https://demo1.leotheme.com/leo_rent_car_demo/img/leoblog/b/1/9/90_90/b-blog-7.jpg" alt="">
+                        <div>
+                            <p>Nullam ullamcorper nisl quis ornare molestie</p>
+                            <span>DEC 18TH 2023</span>
+                        </div>
+                    </li>
+                    <li>
+                        <img src="https://demo1.leotheme.com/leo_rent_car_demo/img/leoblog/b/1/9/90_90/b-blog-7.jpg" alt="">
+                        <div>
+                            <p>Nullam ullamcorper nisl quis ornare molestie</p>
+                            <span>DEC 18TH 2023</span>
+                        </div>
+                    </li>
+                </ul>
+            </li>
+            <li class="third">
+                <b>NewsLetter</b>
+                <div class="email-input">
+                    <input type="text" placeholder="Your email address">
+                    <a href=""><i class="fa-regular fa-paper-plane"></i></a>
+                </div>
+                <p>Connect with us on</p>
+                <ul class="soc-icon">
+                    <li><a href=""><i class="fa-brands fa-facebook-f"></i></a></li>
+                    <li><a href=""><i class="fa-brands fa-twitter"></i></a></li>
+                    <li><a href=""><i class="fa-brands fa-youtube"></i></a></li>
+                    <li><a href=""><i class="fa-brands fa-instagram"></i></a></li>
+                </ul>
+            </li>
+        </ul>
+        <div class="footer-bottom">
+            <p>2023 © <a href="">Emilxan</a>. All right reserved</p>
+            <ul>
+                <li><a href="">Sitemap</a></li>
+                <li><a href="">Terms & condition</a></li>
+                <li><a href="">F.A.Qs</a></li>
+            </ul>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
