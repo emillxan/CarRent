@@ -3,13 +3,18 @@ using CarRent.DAL;
 using CarRent.DAL.Interfaces;
 using CarRent.DAL.Repositories;
 using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Cors.Infrastructure;
+using CarRent.Service.Interfaces;
+using CarRent.Service.Implementations;
+using CarRent.Domain.Entity;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("MvcMovieContext")));
 
-builder.Services.AddScoped<ICarRepository, CarRepository>();
+builder.Services.AddScoped<IBaseRepository<Car>, CarRepository>();
+builder.Services.AddScoped<ICarService, CarService>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();

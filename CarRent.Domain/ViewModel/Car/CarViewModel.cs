@@ -5,12 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CarRent.Domain.Entity
+namespace CarRent.Domain.ViewModels.Car
 {
-    public class Car
+    public class CarViewModel
     {
         public long Id { get; set; }
-
         public string Name { get; set; }
 
         public string Description { get; set; }
@@ -29,7 +28,6 @@ namespace CarRent.Domain.Entity
 
         public int MaxPassenger { get; set; }
 
-        public TypeCar TypeCar { get; set; }
-       
+        public string TypeCar { get; set; }
     }
 }

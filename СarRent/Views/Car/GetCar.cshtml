@@ -1,0 +1,118 @@
+﻿@model CarRent.Domain.Entity.Car
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+
+<header>
+    <nav>
+        <a href="./index.html"><img src="https://demo1.leotheme.com/leo_rent_car_demo/img/leo-rent-car-logo-1533114693.jpg" alt=""></a>
+        <a href="" class="btn-burger"><i class="fa-solid fa-bars"></i></a>
+        <ul class="main-nav container">
+            <li><a href="" class="close">Close</a></li>
+            <li><a href="./index.html">Home</a></li>
+            <li><a href="./our-car.html">Our Car</a></li>
+            <li><a href="./about.html">About</a></li>
+            <li><a href="./contact.html">Contact</a></li>
+        </ul>
+        <a href="./my-account.html" class="my-account">My account</a>
+    </nav>
+</header>
+<main class="container">
+    <div class="our-car__title container car_t">
+        <div>
+            <h2>Ferrari F12 TRS</h2>
+            <ul class="sm-nav">
+                <li><a href="./index.html">Home</a></li>
+                <li><i class="fa-solid fa-chevron-right"></i></li>
+                <li><a href="./our-car.html">Ferrari F12 TRS</a></li>
+            </ul>
+        </div>
+        <span>23$</span>
+    </div>
+    <section class="carusel-car">
+        <div class="car-main-corousel swiper carPageSwiper">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide"><img src="https://demo1.leotheme.com/leo_rent_car_demo/33-large_default/brown-bear-printed-sweater.jpg" alt=""></div>
+                <div class="swiper-slide"><img src="https://demo1.leotheme.com/leo_rent_car_demo/32-large_default/brown-bear-printed-sweater.jpg" alt=""></div>
+            </div>
+            <div class="swiper-button-next">></div>
+            <div class="swiper-button-prev"><</div>
+        </div>
+    </section>
+    <section class="car-main-info container">
+        <section class="left">
+            <p class="description">Regular fit, round neckline, long sleeves. 100% cotton, brushed inner side for extra comfort.</p>
+            <h4>Car Info</h4>
+            <ul class="car-information">
+                <li>Pieces of Luggage: 8</li>
+                <li>Doors: 6</li>
+                <li>Automatic Transmission: done</li>
+                <li>Gas Vehicle:</li>
+                <li> Maximum Passenger: 4</li>
+            </ul>
+            <hr>
+            <h4>Image gallery</h4>
+            <ul class="car-imgs-box">
+                <li><img src="https://demo1.leotheme.com/leo_rent_car_demo/themes/leo_rent_car/assets/img/modules/appagebuilder/images/gallery/gallery-1.jpg" alt=""></li>
+                <li><img src="https://demo1.leotheme.com/leo_rent_car_demo/themes/leo_rent_car/assets/img/modules/appagebuilder/images/gallery/gallery-1.jpg" alt=""></li>
+                <li><img src="https://demo1.leotheme.com/leo_rent_car_demo/themes/leo_rent_car/assets/img/modules/appagebuilder/images/gallery/gallery-1.jpg" alt=""></li>
+                <li><img src="https://demo1.leotheme.com/leo_rent_car_demo/themes/leo_rent_car/assets/img/modules/appagebuilder/images/gallery/gallery-1.jpg" alt=""></li>
+            </ul>
+            <hr>
+            <div class="com">
+                <div class="card">
+                    <i class="fa-solid fa-headphones-simple"></i>
+                    <div>
+                        <p>Premium Support</p>
+                        <span>We’re available for helping you, including holiday</span>
+                    </div>
+                </div>
+                <div class="card">
+                    <i class="fa-regular fa-heart"></i>
+                    <div>
+                        <p>Trusted by 10+ clients</p>
+                        <span>We have 10k+ happy clients who love us and ready for our cars</span>
+                    </div>
+                </div>
+                <div class="card">
+                    <i class="fa-solid fa-wallet"></i>
+                    <div>
+                        <p>No prepaypayment required</p>
+                        <span>Just provide us your Social Security Number and It’s all done</span>
+                    </div>
+                </div>
+                <div class="card">
+                    <i class="fa-regular fa-star"></i>
+                    <div>
+                        <p>High quality cars</p>
+                        <span>Our cars ‘re certificated by gurus who has 20+ experience years</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="right">
+            <div class="pick-up">
+                <label for="">PICK UP</label>
+                <input type="date" name="" id="" class="date" onfocus="(this.type='date')" onblur="(this.type='text')" id="date" placeholder="Date">
+                <label for="">DROP OFF</label>
+                <input type="date" name="" id="" class="date" onfocus="(this.type='date')">
+                <input type="number" name="" id="">
+                <ul>
+                    <li><p>PRICE PER DAY</p><span>$123</span></li>
+                    <li><p>RENTAL PRICE:</p><span>$ 753.9</span></li>
+                    <li><p>SERVICE:</p><span>$ 0</span></li>
+                </ul>
+                <p class="finish-price"><span>RENTAL TOTAL:</span><span>$ 753,90</span></p>
+                <a href="" class="check-car">CHECK CAR</a>
+            </div>
+            <div class="img-box">
+                <a href="" class="img">
+                    <img src="https://demo1.leotheme.com/leo_rent_car_demo/themes/leo_rent_car/assets/img/modules/appagebuilder/images/detail_banner.jpg" alt="">
+                </a>
+            </div>
+        </section>
+    </section>
+</main>

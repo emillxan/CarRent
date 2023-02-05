@@ -1,4 +1,7 @@
 ﻿using CarRent.DAL.Interfaces;
+using CarRent.Domain.ViewModels.Car;
+using CarRent.Service.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -6,86 +9,103 @@ namespace CarRent.Controllers
 {
     public class CarController : Controller
     {
-      private readonly ICarRepository _carRepository;
+      private readonly ICarService _carService;
 
-        public CarController(ICarRepository carRepository)
+        public CarController(ICarService carService)
         {
-            _carRepository = carRepository;
+            _carService = carService;
         }
 
-        // GET: CarController
-        public ActionResult Index()
+
+        [HttpGet]
+        public IActionResult GetCars()
         {
-            return View();
+            var response = _carService.GetCars();
+            if (response.StatusCode == Domain.Enum.StatusCode.OK)
+            {
+                return View("GetCars", response.Data);
+            }
+
+            return View("Error", $"{response.Description}");
         }
 
-        // GET: CarController/Details/5
-        public ActionResult Details(int id)
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> Delete(int id)
         {
-            return View();
+            var response = await _carService.DeleteCar(id);
+            if (response.StatusCode == Domain.Enum.StatusCode.OK)
+            {
+                return RedirectToAction("GetCars");
+            }
+            return View("Error", $"{response.Description}");
         }
 
-        // GET: CarController/Create
-        public ActionResult Create()
+        public IActionResult Compare() => PartialView();
+
+        [HttpGet]
+        public async Task<IActionResult> Save(int id)
         {
-            return View();
+            if (id == 0)
+                return PartialView();
+
+            var response = await _carService.GetCar(id);
+            if (response.StatusCode == Domain.Enum.StatusCode.OK)
+            {
+                return PartialView(response.Data);
+            }
+            ModelState.AddModelError("", response.Description);
+            return PartialView();
         }
 
-        // POST: CarController/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<IActionResult> Save(CarViewModel viewModel)
         {
-            try
+            ModelState.Remove("Id");
+            ModelState.Remove("DateCreate");
+            if (ModelState.IsValid)
             {
-                return RedirectToAction(nameof(Index));
+                if (viewModel.Id == 0)
+                {
+                    byte[] imageData = null;
+                    /*                    using (var binaryReader = new BinaryReader(viewModel.Avatar.OpenReadStream()))
+                                        {
+                                            imageData = binaryReader.ReadBytes((int)viewModel.Avatar.Length);
+                                        }*/
+                    await _carService.Create(viewModel, imageData);
+                }
+                else
+                {
+                    await _carService.Edit(viewModel.Id, viewModel);
+                }
             }
-            catch
-            {
-                return View();
-            }
+            return RedirectToAction("GetCars");
         }
 
-        // GET: CarController/Edit/5
-        public ActionResult Edit(int id)
+
+        [HttpGet]
+        public async Task<ActionResult> GetCar(int id, bool isJson)
         {
-            return View();
+            var response = await _carService.GetCar(id);
+            if (isJson)
+            {
+                return Json(response.Data);
+            }
+            return PartialView("GetCar", response.Data);
         }
 
-        // POST: CarController/Edit/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<IActionResult> GetCar(string term)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            var response = await _carService.GetCar(term);
+            return Json(response.Data);
         }
 
-        // GET: CarController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: CarController/Delete/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public JsonResult GetTypes()
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            var types = _carService.GetTypes();
+            return Json(types.Data);
         }
+
     }
 }

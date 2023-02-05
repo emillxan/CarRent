@@ -1034,6 +1034,23 @@ header .header-carousel .header-carousel__box .header-carousel__card .header-car
         text-transform: none;
     }
 
+@media (max-width: 768px) {
+    .our-car__title h2 {
+        font-size: 20px;
+    }
+}
+
+.car_t {
+    display: flex;
+    justify-content: space-between;
+}
+
+    .car_t span {
+        font-weight: 500;
+        color: #0988ff;
+        font-size: 1.6rem;
+    }
+
 .our-car__shop {
     display: flex;
     gap: 2rem;
@@ -1608,4 +1625,328 @@ header .header-carousel .header-carousel__box .header-carousel__card .header-car
         gap: 3rem;
     }
 }
+
+.carusel-car {
+    position: relative;
+    height: 100%;
+    background: #eee;
+    font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    color: #000;
+    margin: 0;
+    padding: 0;
+}
+
+    .carusel-car .swiper {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+    }
+
+    .carusel-car .swiper-wrapper {
+        display: flex;
+        width: 200%;
+    }
+
+    .carusel-car .swiper-slide {
+        text-align: center;
+        font-size: 18px;
+        background: #fff;
+        /* Center slide text vertically */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+        .carusel-car .swiper-slide img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            -o-object-fit: cover;
+            object-fit: cover;
+        }
+
+    .carusel-car .swiper-button-next, .carusel-car .swiper-button-prev {
+        top: 50%;
+        left: 5px;
+        position: absolute;
+        padding: 10px 15px;
+        background-color: #eee;
+        border-radius: 50%;
+        transition: 0.4s;
+        cursor: pointer;
+    }
+
+        .carusel-car .swiper-button-next:hover, .carusel-car .swiper-button-prev:hover {
+            background-color: #0988ff;
+            color: white;
+        }
+
+    .carusel-car .swiper-button-next {
+        right: 5px;
+        left: auto;
+    }
+
+.car-main-info {
+    margin: 2rem auto;
+    display: flex;
+    gap: 1rem;
+}
+
+    .car-main-info .left p {
+        color: #879db2;
+    }
+
+    .car-main-info .left h4 {
+        margin: 1rem auto;
+        color: #3d5974;
+        font-size: 1.8rem;
+        font-weight: 300;
+    }
+
+    .car-main-info .left hr {
+        margin: 1rem auto;
+        border: none;
+        background-color: #eee;
+        height: 1px;
+        width: 100%;
+    }
+
+    .car-main-info .left .car-information {
+        color: #3d5974;
+        gap: 0.25rem;
+        margin-bottom: 2rem;
+    }
+
+    .car-main-info .left .car-imgs-box {
+        display: flex;
+        gap: 1rem;
+    }
+
+        .car-main-info .left .car-imgs-box li {
+            width: calc(25% - 1rem);
+        }
+
+            .car-main-info .left .car-imgs-box li img {
+                width: 100%;
+            }
+
+    .car-main-info .left .com {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+
+        .car-main-info .left .com .card {
+            display: flex;
+            width: 20rem;
+        }
+
+            .car-main-info .left .com .card i {
+                color: #0988ff;
+                font-size: 1.6rem;
+                margin-right: 2rem;
+                width: 1rem;
+                height: 1rem;
+            }
+
+            .car-main-info .left .com .card p {
+                color: #3d5974;
+                margin-bottom: 1rem;
+                font-weight: 500;
+                font-size: 1rem;
+                margin-left: 0;
+            }
+
+            .car-main-info .left .com .card span {
+                color: #879db2;
+            }
+
+@media (max-width: 1280px) and (min-width: 990px) {
+    .car-main-info .left .com .card {
+        width: 25rem;
+    }
+}
+
+@media (max-width: 990px) and (min-width: 768px) {
+    .car-main-info .left .com .card {
+        width: 20rem;
+        height: auto;
+    }
+}
+
+.car-main-info .right .pick-up {
+    border-radius: 5px;
+    box-shadow: 2px 2px 10px rgb(189, 189, 189);
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+    .car-main-info .right .pick-up label {
+        color: #ccc;
+        font-weight: 500;
+        font-size: 0.8rem;
+    }
+
+    .car-main-info .right .pick-up .date {
+        outline: hidden;
+        font-size: 2rem;
+        color: #3d5974;
+        font-weight: 300;
+        border: none;
+        border-bottom: 1px solid #eee;
+    }
+
+.car-main-info .right .img-box {
+    overflow: hidden;
+}
+
+    .car-main-info .right .img-box .img {
+        position: relative;
+    }
+
+        .car-main-info .right .img-box .img img {
+            transition: 0.8s ease-in-out;
+        }
+
+@media (max-width: 768px) {
+    .car-main-info .right .img-box .img img {
+        width: 100%;
+    }
+}
+
+@media (max-width: 1280px) and (min-width: 990px) {
+    .car-main-info .right .img-box .img img {
+        width: 30rem;
+    }
+}
+
+.car-main-info .right .img-box .img:hover img {
+    scale: 1.2;
+}
+
+.my-acc-in h2 {
+    text-align: center;
+    color: rgb(61, 89, 116);
+    font-size: 1.6rem;
+    margin: 1rem auto;
+}
+
+.my-acc-in .in-box {
+    box-shadow: 2px 2px 11px 0 rgba(0, 0, 0, 0.1);
+    background: #fff;
+    padding: 30px;
+    max-width: 640px;
+    margin: 0 auto;
+}
+
+    .my-acc-in .in-box table {
+        margin: 1rem auto;
+    }
+
+        .my-acc-in .in-box table p {
+            font-weight: 400;
+        }
+
+    .my-acc-in .in-box p a {
+        transition: 0.4s;
+    }
+
+        .my-acc-in .in-box p a:hover {
+            color: #0988ff;
+        }
+
+    .my-acc-in .in-box .check {
+        justify-content: center;
+        display: flex;
+        gap: 0.2rem;
+        margin: 0.5rem auto;
+    }
+
+    .my-acc-in .in-box .input-box .check {
+        justify-content: flex-end;
+    }
+
+    .my-acc-in .in-box .input-box input {
+        width: 15rem;
+        outline: red;
+        background: #ebebeb;
+        color: #acaaa6;
+        padding: 8px 16px;
+        border: 1px solid transparent;
+        padding: 0.5rem 0.75rem;
+        font-size: 1rem;
+        line-height: 1.25;
+        color: #55595c;
+        background-color: #fff;
+        background-image: none;
+        background-clip: padding-box;
+        border: 1px solid rgba(0, 0, 0, 0.15);
+        border-radius: 0.25rem;
+    }
+
+    .my-acc-in .in-box .input-box .pass-box {
+        position: relative;
+    }
+
+        .my-acc-in .in-box .input-box .pass-box .show-password {
+            color: #fff;
+            font-size: 0.7rem;
+            background-color: #55595c;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            padding: 0px 10px;
+            border-radius: 0 0.25rem 0.25rem 0;
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translate(0, -50%);
+        }
+
+    .my-acc-in .in-box .btn-box {
+        align-items: center;
+        gap: 1rem;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .my-acc-in .in-box hr {
+        box-sizing: content-box;
+        height: 2px;
+        width: 100%;
+        overflow: visible;
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+        border: 0;
+        border-top: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .my-acc-in .in-box .forgot-password, .my-acc-in .in-box .create-acc {
+        color: #879db2;
+        transition: 0.4s;
+    }
+
+        .my-acc-in .in-box .forgot-password:hover, .my-acc-in .in-box .create-acc:hover {
+            color: #0988ff;
+        }
+
+    .my-acc-in .in-box .forgot-password {
+        font-size: 0.85rem;
+    }
+
+    .my-acc-in .in-box .sing-in {
+        color: #fff;
+        background-color: #0988ff;
+        padding: 15px 30px;
+        border-radius: 5px;
+        transition: 0.4s;
+    }
+
+        .my-acc-in .in-box .sing-in:hover {
+            background-color: blue;
+        }
 /*# sourceMappingURL=style.css.map */

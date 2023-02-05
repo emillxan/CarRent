@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\CarRent.DAL\CarRent.DAL.csproj" />
+    <ProjectReference Include="..\CarRent.Domain\CarRent.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

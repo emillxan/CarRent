@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace CarRent.DAL.Repositories
 {
-    public class CarRepository : ICarRepository
+    public class CarRepository : IBaseRepository<Car>
     {
         private readonly ApplicationDbContext _db;
 
@@ -34,19 +34,17 @@ namespace CarRent.DAL.Repositories
             return true;
         }
 
-        public async Task<Car> Get(int id)
+        public IQueryable<Car> GetAll()
         {
-            return await _db.Car.FirstOrDefaultAsync(x => x.Id == id);
+            return _db.Car;
         }
 
-        public async Task<Car> GetByName(string name)
+        public async Task<Car> Update(Car entity)
         {
-            return await _db.Car.FirstOrDefaultAsync(x => x.Name == name);
-        }
+            _db.Car.Update(entity);
+            await _db.SaveChangesAsync();
 
-        public async Task<List<Car>> Select()
-        {
-            return await _db.Car.ToListAsync();
+            return entity;
         }
     }
 }

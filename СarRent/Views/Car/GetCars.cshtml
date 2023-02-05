@@ -1,0 +1,131 @@
+﻿@using CarRent.Domain.ViewModels.Car
+@model List<CarRent.Domain.Entity.Car>
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+<header>
+    <nav>
+        <a href="./index.html"><img src="https://demo1.leotheme.com/leo_rent_car_demo/img/leo-rent-car-logo-1533114693.jpg" alt=""></a>
+        <a href="" class="btn-burger"><i class="fa-solid fa-bars"></i></a>
+        <ul class="main-nav container">
+            <li><a href="" class="close">Close</a></li>
+            <li><a href="./index.html">Home</a></li>
+            <li><a href="./our-car.html" class="active">Our Car</a></li>
+            <li><a href="./about.html">About</a></li>
+            <li><a href="./contact.html">Contact</a></li>
+        </ul>
+        <a href="./my-account.html" class="my-account">My account</a>
+    </nav>
+</header>
+<main>
+    <div class="our-car__title container">
+        <h2>Future Cars</h2>
+        <ul class="sm-nav">
+            <li><a href="./index.html">Home</a></li>
+            <li><i class="fa-solid fa-chevron-right"></i></li>
+            <li><a href="./our-car.html">Future Cars</a></li>
+        </ul>
+    </div>
+    <section class="our-car__shop container">
+        <section class="our-car__filter">
+            <h3>FUTURE CARS</h3>
+            <ul class="our-car__filter-main">
+                <li><a href="">Sports Cars</a></li>
+                <li><a href="">Crossovers</a></li>
+            </ul>
+            <div class="filter-by">
+                <h4>FILTER BY</h4>
+                <div class="categoties">
+                    <p>Categories</p>
+                    <div>
+                        <input type="checkbox" name="" id="">
+                        <label for="">Crossovers</label>
+                        <span>(11)</span>
+                    </div>
+                    <div>
+                        <input type="checkbox" name="" id="">
+                        <label for="">Sports Cars</label>
+                        <span>(11)</span>
+                    </div>
+                </div>
+                <div class="color">
+                    <p>Color</p>
+                    <div>
+                        <div class="color-box w"></div>
+                        <label for="">White</label>
+                        <span>(11)</span>
+                    </div>
+                    <div>
+                        <div class="color-box b"></div>
+                        <label for="">Black</label>
+                        <span>(11)</span>
+                    </div>
+                </div>
+                <div class="brand">
+                    <p>Brand</p>
+                    <div>
+                        <label for="">Ferrari</label>
+                        <span>(11)</span>
+                    </div>
+                    <div>
+                        <label for="">Lamborghini</label>
+                        <span>(11)</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="our-car__shop-box">
+            <div class="our-car__shop-box-top">
+                <div class="top-filter">
+                    <div class="top-filter__visible">
+                        <a href=""><i class="fa-solid fa-table-cells-large active"></i></a>
+                        <a href=""><i class="fa-solid fa-grip "></i></a>
+                    </div>
+                    <p>There are 11 products.</p>
+                    <div class="top-filter__select">
+                        <label for="">Short by:</label>
+                        <select name="" id="">
+                            <option value="1">Relevance</option>
+                            <option value="2">Name, A to Z</option>
+                            <option value="3">Name, Z to A</option>
+                            <option value="4">Price, low to high</option>
+                            <option value="5">Price, high to low</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="our-car__shop-card-box">
+                @foreach(var car in Model)
+                {
+                    <div class="car-card sm">
+                        <div class="car-card__top">
+                            <img src="https://demo1.leotheme.com/leo_rent_car_demo/24-large_default/hummingbird-printed-t-shirt.jpg" alt="">
+                            <img src="https://demo1.leotheme.com/leo_rent_car_demo/25-home_default/hummingbird-printed-t-shirt.jpg" alt="">
+                        </div>
+                        <div class="car-card__text">
+                            <h5>@car.Model @car.Name</h5>
+                            <p class="price">$@car.Price <span>/Day</span></p>
+                            <ul>
+                                <li>Prices of Luggage: @car.PiecesOfLuggage</li>
+                                <li>Doors: @car.Doors</li>
+                                <li>Maximum Passenger: @car.MaxPassenger</li>
+                            </ul>
+                            <a href="">VIEW DETAILS</a>
+                        </div>
+                    </div>
+                }               
+            </div>
+            <div class="our-car__shop-box-bottom">
+                <p>Showing 1-8 of 11 item(s)</p>
+                <ul>
+                    <li><a href="">1</a></li>
+                    <li><a href="">2</a></li>
+                    <li><a href=""><i class="fa-solid fa-chevron-right"></i></a></li>
+                </ul>
+            </div>
+        </section>
+    </section>
+</main>
