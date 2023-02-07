@@ -28,7 +28,7 @@ namespace CarRent.Service.Implementations
         }
 
         
-        // Возврощает Тип машины
+
         public BaseResponse<Dictionary<int, string>> GetTypes()
         {
             try
@@ -52,7 +52,6 @@ namespace CarRent.Service.Implementations
             }
         }
 
-        // Возврощает Машину по ID
         public async Task<IBaseResponse<CarViewModel>> GetCar(long id)
         {
             try
@@ -96,7 +95,6 @@ namespace CarRent.Service.Implementations
                 };
             }
         }
-
 
         public async Task<BaseResponse<Dictionary<long, string>>> GetCar(string term)
         {
@@ -178,8 +176,8 @@ namespace CarRent.Service.Implementations
                 {
                     return new BaseResponse<bool>()
                     {
-                        Description = "User not found",
-                        StatusCode = StatusCode.UserNotFound,
+                        Description = "Car not found",
+                        StatusCode = StatusCode.CarNotFound,
                         Data = false
                     };
                 }
@@ -283,5 +281,8 @@ namespace CarRent.Service.Implementations
                 };
             }
         }
+
+
+
     }
 }

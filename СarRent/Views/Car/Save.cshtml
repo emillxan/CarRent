@@ -1,0 +1,60 @@
+﻿@model CarRent.Domain.ViewModels.Car.CarViewModel
+
+
+<div class="modal-edit-car">
+    <form action="~/Car/Save/@Model" method="post" class="container">
+        <div class="row">
+            <div class="input-box">
+                <p>Name</p>
+                <input type="text" asp-for="@Model.Name">
+            </div>
+            <div class="input-box">
+                <p>Model</p>
+                <input type="text" asp-for="@Model.Model">
+            </div>
+        </div>
+        <div class="input-box">
+            <p>Description</p>
+            <textarea name="" id="" cols="44" rows="10" asp-for="@Model.Description"></textarea>
+        </div>
+        <div class="row">
+            <div class="input-box">
+                <p>Speed</p>
+                <input type="text" asp-for="@Model.Speed">
+            </div>
+            <div class="input-box">
+                <p>Price</p>
+                <input type="text" asp-for="@Model.Price">
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-box">
+                <p>PiecesOfLuggage</p>
+                <input type="text" asp-for="@Model.PiecesOfLuggage">
+            </div>
+            <div class="input-box">
+                <p>Doors</p>
+                <input type="text" asp-for="@Model.Doors">
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-box">
+                <p>MaxPassenger</p>
+                <input type="text" asp-for="@Model.MaxPassenger">
+            </div>
+            <div class="input-box">
+                <p>TypeCar</p>
+                <select name="" id="carTypeId" asp-for="@Model.TypeCar">
+                    <option value="0">Sports Cars</option>
+                    <option value="1">Crossovers</option>
+                </select>
+            </div>
+        </div>
+        <button type="submit">Edit</button>
+    </form>
+</div>
+
+
+<script>
+
+</script>

@@ -1,0 +1,64 @@
+﻿@model CarRent.Domain.ViewModels.Account.LoginViewModel
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+<header>
+    <nav>
+        <a href="~/Home/Index"><img src="https://demo1.leotheme.com/leo_rent_car_demo/img/leo-rent-car-logo-1533114693.jpg" alt=""></a>
+        <a href="" class="btn-burger"><i class="fa-solid fa-bars"></i></a>
+        <ul class="main-nav container">
+            <li><a href="" class="close">Close</a></li>
+            <li><a href="~/Home/Index">Home</a></li>
+            <li><a href="~/Car/GetCars">Our Car</a></li>
+            <li><a href="~/Home/About">About</a></li>
+            <li><a href="~/Home/Contact">Contact</a></li>
+            @if (User.IsInRole("Admin"))
+            {
+                <li><a href="~/Car/AllCar">All Cars</a></li>
+                <li><a href="~/Users/AllUsers">All Users</a></li>
+            }
+        </ul>
+        @if (User.Identity.IsAuthenticated)
+        {
+            <a href="~/Profile/Profile" class="my-account">My account</a>
+        }
+        else
+        {
+            <a href="~/Account/Login" class="my-account">My account</a>
+        }
+    </nav>
+</header>
+<main>
+    <section class="my-acc-in log-in container">
+        <h2>Log in to your account</h2>
+        <form class="in-box" method="post" asp-controller="Account" asp-action="Login">
+            <table>
+                <tbody class="input-box">
+                    <tr>
+                        <th><p>Emai</p></th>
+                        <th><input type="text" asp-for="eMail"></th>
+                    </tr>
+                    <tr>
+                        <th><p>Password</p></th>
+                        <th>
+                            <div class="pass-box">
+                                <input type="password" class="pass" autocomplete="new-password" asp-for="Password">
+                                <a href="" class="show-password">SHOW</a>
+                            </div>
+                        </th>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="btn-box">
+                <a href="" class="forgot-password">Forgot your password?</a>
+                <button href="" class="sing-in" type="submit">SING IN</button>
+                <hr>
+                <a href="~/Account/Register" class="create-acc" id="btn-create-acc">No account? Create one here</a>
+            </div>
+        </form>
+    </section>
+
+</main>

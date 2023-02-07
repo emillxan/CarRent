@@ -1,0 +1,95 @@
+﻿@using CarRent.Domain.ViewModels.Car
+@model List<CarRent.Domain.Entity.Car>
+
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+
+<header>
+    <nav>
+        <a href="~/Home/Index"><img src="https://demo1.leotheme.com/leo_rent_car_demo/img/leo-rent-car-logo-1533114693.jpg" alt=""></a>
+        <a href="" class="btn-burger"><i class="fa-solid fa-bars"></i></a>
+        <ul class="main-nav container">
+            <li><a href="" class="close">Close</a></li>
+            <li><a href="~/Home/Index">Home</a></li>
+            <li><a href="~/Car/GetCars">Our Car</a></li>
+            <li><a href="~/Home/About">About</a></li>
+            <li><a href="~/Home/Contact">Contact</a></li>
+            @if (User.IsInRole("Admin"))
+            {
+                <li><a href="~/Car/AllCar">All Cars</a></li>
+                <li><a href="~/Users/AllUsers">All Users</a></li>
+            }
+        </ul>
+        @if (User.Identity.IsAuthenticated)
+        {
+            <a href="~/Profile/Profile" class="my-account">My account</a>
+        }
+        else
+        {
+            <a href="~/Account/Login" class="my-account">My account</a>
+        }
+    </nav>
+</header>
+<main>
+    <section class="all-car container">
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Brand</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Speed</th>
+                <th>Doors</th>
+                <th>Pieces of Luggage</th>
+                <th>Maximum Passenger</th>
+                <th>Edit</th>
+                <th>Delet</th>
+            </tr>
+            @foreach(var car in Model)
+            {
+                <tr>
+                    <td>@car.Id</td>
+                    <td>@car.Model</td>
+                    <td>@car.Name</td>
+                    <td>@car.Price$</td>
+                    <td>@car.Speed</td>
+                    <td>@car.Doors</td>
+                    <td>@car.PiecesOfLuggage</td>
+                    <td>@car.MaxPassenger</td>
+                    <td><a href="" class="edit-car" onclick="openModal({ url: '/Car/Save/@car.Id', data: '@car.Id' })">Edit</a></td>
+                    <td><a href="~/Car/Delete/@car.Id">Delet</a></td>
+                </tr>
+            }
+        </table>
+    </section>
+</main>
+
+
+    <script>
+        function openModal(parameters) {
+            event.preventDefault()
+            const id = parameters.data;
+            const url = parameters.url;
+            const modal = $('.modal');
+
+            $.ajax({
+                type: 'GET',
+                url: url,
+                data: { "id": id },
+                success: function (response) {
+                    modal.html(response);
+                    $('.modal-edit-car').show(1000)
+                },
+                failure: function () {
+
+                },
+                error: function (response) {
+                    alert(response.responseText);
+                }
+            });
+        };
+    </script>

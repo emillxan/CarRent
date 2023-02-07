@@ -1,0 +1,90 @@
+﻿@model CarRent.Domain.ViewModel.Profile.ProfileViewModel
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+<header>
+    <nav>
+        <a href="~/Home/Index"><img src="https://demo1.leotheme.com/leo_rent_car_demo/img/leo-rent-car-logo-1533114693.jpg" alt=""></a>
+        <a href="" class="btn-burger"><i class="fa-solid fa-bars"></i></a>
+        <ul class="main-nav container">
+            <li><a href="" class="close">Close</a></li>
+            <li><a href="~/Home/Index">Home</a></li>
+            <li><a href="~/Car/GetCars">Our Car</a></li>
+            <li><a href="~/Home/About">About</a></li>
+            <li><a href="~/Home/Contact">Contact</a></li>
+            @if (User.IsInRole("Admin"))
+            {
+                <li><a href="~/Car/AllCar">All Cars</a></li>
+                <li><a href="~/Users/AllUsers">All Users</a></li>
+            }
+        </ul>
+        @if (User.Identity.IsAuthenticated)
+        {
+            <a href="~/Profile/Profile" class="my-account">My account</a>
+        }
+        else
+        {
+            <a href="~/Account/Login" class="my-account">My account</a>
+        }
+    </nav>
+</header>
+<main>
+    <section>
+        <section class="container profile-main-info profile-sec">
+            <div class="main-title">
+                <h2>Main info</h2>
+                <a href="~/Account/Logout">Log Out</a>
+            </div>
+            <div class="prof-info">
+                <ul>
+                    <li>Name: @Model.UserName</li>
+                    <li>eMail: @Model.eMail</li>
+                    <li>Age: @Model.Age</li>
+                    <li>Role:</li>
+                    <li>Password</li>
+                </ul>
+            </div>
+        </section>
+        <section class="container profile-card-info profile-sec">
+            <div class="main-title">
+                <h2>Bank Card</h2>
+                <a href="">Add Cart</a>
+            </div>
+            <div class="prof-info">
+                <ul>
+                    <li>1234 1234 1234 1234</li>
+                    <li>12/22</li>
+                    <li>123</li>
+                </ul>
+                <ul>
+                    <li>1234 1234 1234 1234</li>
+                    <li>12/22</li>
+                    <li>123</li>
+                </ul>
+            </div>
+        </section>
+        <section class="container profile-adress-info profile-sec">
+            <div class="main-title">
+                <h2>Adress</h2>
+                <a href="">Add Adress</a>
+            </div>
+            <div class="prof-info">
+                <ul>
+                    <li>AZ1100</li>
+                    <li>Street</li>
+                    <li>Home</li>
+                    <li>Password</li>
+                </ul>
+                <ul>
+                    <li>AZ1100</li>
+                    <li>Street</li>
+                    <li>Home</li>
+                    <li>Password</li>
+                </ul>
+            </div>
+        </section>
+    </section>
+</main>

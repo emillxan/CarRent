@@ -1949,4 +1949,108 @@ header .header-carousel .header-carousel__box .header-carousel__card .header-car
         .my-acc-in .in-box .sing-in:hover {
             background-color: blue;
         }
+
+.profile-sec {
+    padding: 1rem;
+}
+
+    .profile-sec .main-title {
+        display: flex;
+        justify-content: space-between;
+        color: #55595c;
+        padding: 1rem 0;
+    }
+
+        .profile-sec .main-title a {
+            transition: 0.4s;
+        }
+
+            .profile-sec .main-title a:hover {
+                color: #0988ff;
+            }
+
+    .profile-sec .prof-info {
+        display: flex;
+        gap: 2rem;
+    }
+
+        .profile-sec .prof-info ul li {
+            padding: 1px 0;
+        }
+
+.all-car {
+    margin: 2rem auto;
+}
+
+    .all-car table {
+        border-spacing: 0;
+        width: 100%;
+        border: 1px solid rgb(212, 212, 212);
+    }
+
+        .all-car table tr:nth-child(2n-1) {
+            background-color: rgb(230, 230, 255);
+        }
+
+        .all-car table th, .all-car table td {
+            padding: 5px;
+            text-align: start;
+        }
+
+            .all-car table th a, .all-car table td a {
+                transition: 0.4s;
+            }
+
+                .all-car table th a:hover, .all-car table td a:hover {
+                    color: #0988ff;
+                }
+
+.modal-edit-car {
+    display: none;
+    z-index: 17;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.75);
+}
+
+    .modal-edit-car form {
+        margin: 2rem auto;
+        background-color: white;
+        border-radius: 5px;
+        padding: 1rem 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem;
+        width: 400px;
+    }
+
+        .modal-edit-car form .row {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .modal-edit-car form button {
+            padding: 8px 20px;
+            border: 0;
+            background-color: #0988ff;
+            color: white;
+            transition: 0.4s;
+            cursor: pointer;
+        }
+
+            .modal-edit-car form button:hover {
+                background-color: blue;
+            }
+
+        .modal-edit-car form input, .modal-edit-car form textarea, .modal-edit-car form select {
+            outline: none;
+            background-color: rgb(246, 246, 246);
+            border: 1px solid rgb(182, 182, 182);
+            padding: 5px;
+        }
 /*# sourceMappingURL=style.css.map */

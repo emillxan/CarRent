@@ -1,0 +1,89 @@
+﻿@model CarRent.Domain.ViewModels.Account.RegisterViewModel
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+
+<header>
+    <nav>
+        <a href="~/Home/Index"><img src="https://demo1.leotheme.com/leo_rent_car_demo/img/leo-rent-car-logo-1533114693.jpg" alt=""></a>
+        <a href="" class="btn-burger"><i class="fa-solid fa-bars"></i></a>
+        <ul class="main-nav container">
+            <li><a href="" class="close">Close</a></li>
+            <li><a href="~/Home/Index">Home</a></li>
+            <li><a href="~/Car/GetCars">Our Car</a></li>
+            <li><a href="~/Home/About">About</a></li>
+            <li><a href="~/Home/Contact">Contact</a></li>
+            @if (User.IsInRole("Admin"))
+            {
+                <li><a href="~/Car/AllCar">All Cars</a></li>
+                <li><a href="~/Users/AllUsers">All Users</a></li>
+            }
+        </ul>
+        @if (User.Identity.IsAuthenticated)
+        {
+            <a href="~/Profile/Profile" class="my-account">My account</a>
+        }
+        else
+        {
+            <a href="~/Account/Login" class="my-account">My account</a>
+        }
+    </nav>
+</header>
+<main>
+    <section class="my-acc-in create-acc container">
+        <h2>Create an account</h2>
+        <form class="in-box" asp-controller="Account" asp-action="Register">
+            <p>Already have an account? <a href="~/Account/Login" class="log-in" id="btn-sing-acc">Log in instead!</a></p>
+            <table>
+                <tbody class="input-box">
+                    <tr>
+                        <th><p>First name</p></th>
+                        <td><input asp-for="FirstName" type=" text"></td>
+                    </tr>
+                    <tr>
+                        <th><p>Second name</p></th>
+                        <td><input asp-for="SecondName" type=" text"></td>
+                    </tr>
+                    <tr>
+                        <th><p>Email</p></th>
+                        <td><input type="text" asp-for="eMail"></td>
+                    </tr>
+                    <tr>
+                        <th><p>Password</p></th>
+                        <td>
+                            <div class="pass-box">
+                                <input asp-for="Password" type="password" class="pass">
+                                <a href="" class="show-password">SHOW</a>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><p>Password Confirm</p></th>
+                        <td>
+                            <div class="pass-box">
+                                <input asp-for="PasswordConfirm" type="password" class="pass">
+                                <a href="" class="show-password">SHOW</a>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="">
+                <div class="check">
+                    <input type="checkbox" name="'" id="">
+                    <p>Receive offers from our partners</p>
+                </div>
+                <div class="check">
+                    <input type="checkbox" name="'" id="">
+                    <p>Sign up for our newsletter</p>
+                </div>
+            </div>
+            <div class="btn-box">
+                <button href="" class="sing-in" type="submit">SAVE</button>
+            </div>
+        </form>
+    </section>
+</main>

@@ -4,16 +4,28 @@
 
 <header>
     <nav>
-        <a href="./index.html"><img src="https://demo1.leotheme.com/leo_rent_car_demo/img/leo-rent-car-logo-1533114693.jpg" alt=""></a>
+        <a href="~ /Home/Index"><img src="https://demo1.leotheme.com/leo_rent_car_demo/img/leo-rent-car-logo-1533114693.jpg" alt=""></a>
         <a href="" class="btn-burger"><i class="fa-solid fa-bars"></i></a>
         <ul class="main-nav container">
             <li><a href="" class="close">Close</a></li>
             <li><a href="~/Home/Index">Home</a></li>
-            <li><a href="~/Home/OurCar">Our Car</a></li>
+            <li><a href="~/Car/GetCars">Our Car</a></li>
             <li><a href="~/Home/About">About</a></li>
             <li><a href="~/Home/Contact" class="active">Contact</a></li>
+            @if (User.IsInRole("Admin"))
+            {
+                <li><a href="~/Car/AllCar">All Cars</a></li>
+                <li><a href="~/Users/AllUsers">All Users</a></li>
+            }
         </ul>
-        <a href="./my-account.html" class="my-account">My account</a>
+        @if (User.Identity.IsAuthenticated)
+        {
+            <a href="~/Profile/Profile" class="my-account">My account</a>
+        }
+        else
+        {
+            <a href="~/Account/Login" class="my-account">My account</a>
+        }
     </nav>
 </header>
 <main>
