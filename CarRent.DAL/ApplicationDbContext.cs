@@ -21,7 +21,7 @@ namespace CarRent.DAL
         public DbSet<Car> Car { get; set; }
         public DbSet<Users> Users { get; set; }
         public DbSet<Profile> Profile { get; set; }
-
+        public DbSet<CarPhotos> CarPhotos { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

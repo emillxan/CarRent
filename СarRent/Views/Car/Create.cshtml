@@ -16,8 +16,8 @@
     </nav>
 </header>
 <main>
-    <section class="edit-car"> 
-        <form method="post" class="container enctype="multipart/form-data" asp-controller="Car" asp-action="Save">
+    <section class="edit-car">
+        <form method="post" class="container enctype="multipart/form-data" asp-controller="Car" asp-action="Create" asp-antiforgery="true">
             <div class="row">
                 <div class="input-box">
                     <p>Name</p>
@@ -60,24 +60,18 @@
                 <div class="input-box">
                     <p>TypeCar</p>
                     <select name="" id="">
-
-                        
                     </select>
                 </div>
             </div>
             <div class="all-img">
                 <p>All Img</p>
+                <input type="file"  asp-for="@Model.CarPhotos">
                 <div class="img-box">
-                    @foreach (var img in Model.CarPhotos)
-                    {
-                        <a href="~/Car/DeletImg/@img.Id">
-                            <img src="~/img/@img.PhotoPath" alt="">
-                        </a>
-                    }
+
                 </div>
                 <a href="" class="add-img">Add Img</a>
             </div>
-            <button type="submit">Edit</button>
+            <button type="submit">Save</button>
         </form>
     </section>
 </main>

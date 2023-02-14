@@ -36,6 +36,7 @@
 </header>
 <main>
     <section class="all-car container">
+        <a href="~/Car/Create">Add Car</a>
         <table>
             <tr>
                 <th>ID</th>
@@ -60,7 +61,7 @@
                     <td>@car.Doors</td>
                     <td>@car.PiecesOfLuggage</td>
                     <td>@car.MaxPassenger</td>
-                    <td><a href="" class="edit-car" onclick="openModal({ url: '/Car/Save/@car.Id', data: '@car.Id' })">Edit</a></td>
+                    <td><a href="~/Car/Save/@car.Id" class="edit-car">Edit</a></td>
                     <td><a href="~/Car/Delete/@car.Id">Delet</a></td>
                 </tr>
             }
@@ -68,28 +69,3 @@
     </section>
 </main>
 
-
-    <script>
-        function openModal(parameters) {
-            event.preventDefault()
-            const id = parameters.data;
-            const url = parameters.url;
-            const modal = $('.modal');
-
-            $.ajax({
-                type: 'GET',
-                url: url,
-                data: { "id": id },
-                success: function (response) {
-                    modal.html(response);
-                    $('.modal-edit-car').show(1000)
-                },
-                failure: function () {
-
-                },
-                error: function (response) {
-                    alert(response.responseText);
-                }
-            });
-        };
-    </script>

@@ -1,4 +1,5 @@
-﻿using CarRent.Domain.Enum;
+﻿using CarRent.Domain.Entity;
+using CarRent.Domain.Enum;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,6 +29,8 @@ namespace CarRent.Domain.ViewModels.Car
 
         public int MaxPassenger { get; set; }
 
-        public string TypeCar { get; set; }
+        public string TypeCar { get; set; } 
+
+        public List<CarPhotos> CarPhotos { get; set; }
     }
 }

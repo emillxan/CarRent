@@ -5,11 +5,13 @@ using CarRent.Domain.Extensions;
 using CarRent.Domain.Response;
 using CarRent.Domain.ViewModels.Car;
 using CarRent.Service.Interfaces;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.IO.Enumeration;
 using System.Linq;
 using System.Runtime.ConstrainedExecution;
 using System.Text;
@@ -21,10 +23,13 @@ namespace CarRent.Service.Implementations
     public class CarService : ICarService
     {
         private readonly IBaseRepository<Car> _carRepository;
+        private readonly IBaseRepository<CarPhotos> _carPhotosRepository;
 
-        public CarService(IBaseRepository<Car> carRepository)
+        public CarService(IBaseRepository<Car> carRepository,
+            IBaseRepository<CarPhotos> carPhotosRepository)
         {
             _carRepository = carRepository;
+            _carPhotosRepository = carPhotosRepository;
         }
 
         
@@ -57,6 +62,7 @@ namespace CarRent.Service.Implementations
             try
             {
                 var car = await _carRepository.GetAll().FirstOrDefaultAsync(x => x.Id == id);
+                var img =  _carPhotosRepository.GetAll().ToList().Where(x => x.CarId == id);
                 if (car == null)
                 {
                     return new BaseResponse<CarViewModel>()
@@ -77,7 +83,8 @@ namespace CarRent.Service.Implementations
                     PiecesOfLuggage = car.PiecesOfLuggage,
                     AutomaticTransmission = car.AutomaticTransmission,
                     Doors = car.Doors,
-                    MaxPassenger = car.MaxPassenger
+                    MaxPassenger = car.MaxPassenger,
+                    CarPhotos = img.ToList()
                 };
 
                 return new BaseResponse<CarViewModel>()
@@ -132,7 +139,7 @@ namespace CarRent.Service.Implementations
             }
         }
 
-        public async Task<IBaseResponse<Car>> Create(CarViewModel model, byte[] imageData)
+        public async Task<IBaseResponse<Car>> Create(CarViewModel model, IFormFile CarPhoto)
         {
             try
             {
@@ -150,6 +157,19 @@ namespace CarRent.Service.Implementations
                     MaxPassenger = model.MaxPassenger
                 };
                 await _carRepository.Create(car);
+
+                var CarPphoto = new CarPhotos() 
+                { 
+                    CarId = model.Id,
+                    PhotoPath = CarPhoto.FileName
+                };
+                await _carPhotosRepository.Create(CarPphoto);
+
+                string fileName = Path.GetFileNameWithoutExtension(Path.GetRandomFileName()) + Path.GetExtension(CarPhoto.FileName);
+                using(Stream stream = new FileStream("wwwroot/img/" + fileName, FileMode.Create))
+                {
+                    CarPhoto.CopyTo(stream);
+                }
 
                 return new BaseResponse<Car>()
                 {
@@ -172,6 +192,7 @@ namespace CarRent.Service.Implementations
             try
             {
                 var car = await _carRepository.GetAll().FirstOrDefaultAsync(x => x.Id == id);
+                var img = _carPhotosRepository.GetAll().ToList().Where(x => x.CarId == id);
                 if (car == null)
                 {
                     return new BaseResponse<bool>()
@@ -183,6 +204,10 @@ namespace CarRent.Service.Implementations
                 }
 
                 await _carRepository.Delete(car);
+                foreach(var item in img)
+                {
+                    await _carPhotosRepository.Delete(item);
+                }
 
                 return new BaseResponse<bool>()
                 {
@@ -214,22 +239,15 @@ namespace CarRent.Service.Implementations
                     };
                 }
 
-/*                car.Description = model.Description;
-                car.Model = model.Model;
-                car.Price = model.Price;
-                car.Speed = model.Speed;
-                car.DateCreate = DateTime.ParseExact(model.DateCreate, "yyyyMMdd HH:mm", null);
                 car.Name = model.Name;
-*/
-                car.Name = car.Name;
-                car.Model = car.Model;
-                car.Description = car.Description;
-                car.Speed = car.Speed;
-                //car.TypeCar = car.TypeCar.GetDisplayName();
-                car.Price = car.Price;
-                car.PiecesOfLuggage = car.PiecesOfLuggage;
-                car.AutomaticTransmission = car.AutomaticTransmission;
-                car.Doors = car.Doors;
+                car.Model = model.Model;
+                car.Description = model.Description;
+                car.Speed = model.Speed;
+                //car.TypeCar = model.TypeCar;
+                car.Price = model.Price;
+                car.PiecesOfLuggage = model.PiecesOfLuggage;
+                car.AutomaticTransmission = model.AutomaticTransmission;
+                car.Doors = model.Doors;
                 car.MaxPassenger = car.MaxPassenger;
 
                 await _carRepository.Update(car);
@@ -240,7 +258,6 @@ namespace CarRent.Service.Implementations
                     Data = car,
                     StatusCode = StatusCode.OK,
                 };
-                // TypeCar
             }
             catch (Exception ex)
             {
@@ -257,6 +274,12 @@ namespace CarRent.Service.Implementations
             try
             {
                 var cars = _carRepository.GetAll().ToList();
+                foreach(var item in cars)
+                {
+                    var img = _carPhotosRepository.GetAll().ToList().Where(x => x.CarId == item.Id);
+                    item.Img = img.ToList();
+                }
+
                 if (!cars.Any())
                 {
                     return new BaseResponse<List<Car>>()

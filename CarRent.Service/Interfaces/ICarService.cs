@@ -2,6 +2,7 @@
 using CarRent.Domain.Response;
 using CarRent.Domain.ViewModels;
 using CarRent.Domain.ViewModels.Car;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,7 +21,7 @@ namespace CarRent.Service.Interfaces
 
         Task<BaseResponse<Dictionary<long, string>>> GetCar(string term);
 
-        Task<IBaseResponse<Car>> Create(CarViewModel car, byte[] imageData);
+        Task<IBaseResponse<Car>> Create(CarViewModel car, IFormFile CarPhoto);
 
         Task<IBaseResponse<bool>> DeleteCar(long id);
 

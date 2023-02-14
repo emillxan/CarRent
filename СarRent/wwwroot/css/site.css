@@ -2005,52 +2005,69 @@ header .header-carousel .header-carousel__box .header-carousel__card .header-car
                     color: #0988ff;
                 }
 
-.modal-edit-car {
-    display: none;
-    z-index: 17;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, 0.75);
+.edit-car form {
+    margin: 2rem auto;
+    background-color: white;
+    border-radius: 5px;
+    padding: 1rem 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
 }
 
-    .modal-edit-car form {
-        margin: 2rem auto;
-        background-color: white;
-        border-radius: 5px;
-        padding: 1rem 0;
+    .edit-car form .all-img .img-box {
         display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
         gap: 1rem;
-        width: 400px;
+        flex-wrap: wrap;
+        margin-bottom: 1rem;
     }
 
-        .modal-edit-car form .row {
-            display: flex;
-            gap: 1rem;
+    .edit-car form .add-img {
+        margin-top: 3rem;
+        padding: 8px 20px;
+        background-color: #0988ff;
+        color: white;
+        transition: 0.4s;
+    }
+
+        .edit-car form .add-img:hover {
+            background-color: blue;
         }
 
-        .modal-edit-car form button {
-            padding: 8px 20px;
-            border: 0;
-            background-color: #0988ff;
-            color: white;
-            transition: 0.4s;
+    .edit-car form img {
+        width: 15rem;
+        transition: 0.4s;
+    }
+
+        .edit-car form img:hover {
+            opacity: 0.5;
             cursor: pointer;
         }
 
-            .modal-edit-car form button:hover {
-                background-color: blue;
-            }
+    .edit-car form .row {
+        display: flex;
+        gap: 1rem;
+    }
 
-        .modal-edit-car form input, .modal-edit-car form textarea, .modal-edit-car form select {
-            outline: none;
-            background-color: rgb(246, 246, 246);
-            border: 1px solid rgb(182, 182, 182);
-            padding: 5px;
+    .edit-car form button {
+        padding: 8px 20px;
+        border: 0;
+        background-color: #0988ff;
+        color: white;
+        transition: 0.4s;
+        cursor: pointer;
+    }
+
+        .edit-car form button:hover {
+            background-color: blue;
         }
+
+    .edit-car form input, .edit-car form textarea, .edit-car form select {
+        outline: none;
+        background-color: rgb(246, 246, 246);
+        border: 1px solid rgb(182, 182, 182);
+        padding: 5px;
+    }
 /*# sourceMappingURL=style.css.map */

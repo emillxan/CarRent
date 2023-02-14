@@ -47,8 +47,10 @@
     <section class="carusel-car">
         <div class="car-main-corousel swiper carPageSwiper">
             <div class="swiper-wrapper">
-                <div class="swiper-slide"><img src="https://demo1.leotheme.com/leo_rent_car_demo/33-large_default/brown-bear-printed-sweater.jpg" alt=""></div>
-                <div class="swiper-slide"><img src="https://demo1.leotheme.com/leo_rent_car_demo/32-large_default/brown-bear-printed-sweater.jpg" alt=""></div>
+                @foreach(var img in Model.CarPhotos)
+                {
+                    <div class="swiper-slide"><img src="~/img/@img.PhotoPath" alt=""></div>
+                }   
             </div>
             <div class="swiper-button-next">></div>
             <div class="swiper-button-prev"><</div>
@@ -68,10 +70,10 @@
             <hr>
             <h4>Image gallery</h4>
             <ul class="car-imgs-box">
-                <li><img src="https://demo1.leotheme.com/leo_rent_car_demo/themes/leo_rent_car/assets/img/modules/appagebuilder/images/gallery/gallery-1.jpg" alt=""></li>
-                <li><img src="https://demo1.leotheme.com/leo_rent_car_demo/themes/leo_rent_car/assets/img/modules/appagebuilder/images/gallery/gallery-1.jpg" alt=""></li>
-                <li><img src="https://demo1.leotheme.com/leo_rent_car_demo/themes/leo_rent_car/assets/img/modules/appagebuilder/images/gallery/gallery-1.jpg" alt=""></li>
-                <li><img src="https://demo1.leotheme.com/leo_rent_car_demo/themes/leo_rent_car/assets/img/modules/appagebuilder/images/gallery/gallery-1.jpg" alt=""></li>
+                @foreach (var img in Model.CarPhotos)
+                {
+                    <li><img src="~/img/@img.PhotoPath" alt=""></li>
+                }
             </ul>
             <hr>
             <div class="com">

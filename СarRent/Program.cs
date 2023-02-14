@@ -22,10 +22,12 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     });
 
 builder.Services.AddScoped<IBaseRepository<Car>, CarRepository>();
-builder.Services.AddScoped<ICarService, CarService>();
 builder.Services.AddScoped<IBaseRepository<Users>, UsersRepository>();
-builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<IBaseRepository<Profile>, ProfileRepository>();
+builder.Services.AddScoped<IBaseRepository<CarPhotos>, CarPhotosRepository>();
+
+builder.Services.AddScoped<ICarService, CarService>();
+builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<IProfileService, ProfileService>();
 
 // Add services to the container.

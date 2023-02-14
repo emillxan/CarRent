@@ -30,6 +30,7 @@ namespace CarRent.Domain.Entity
         public int MaxPassenger { get; set; }
 
         public TypeCar TypeCar { get; set; }
-       
+
+        public List<CarPhotos> Img { get; set; }
     }
 }

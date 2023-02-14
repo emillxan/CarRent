@@ -114,8 +114,10 @@
                 {
                     <div class="car-card sm">
                         <div class="car-card__top">
-                            <img src="https://demo1.leotheme.com/leo_rent_car_demo/24-large_default/hummingbird-printed-t-shirt.jpg" alt="">
-                            <img src="https://demo1.leotheme.com/leo_rent_car_demo/25-home_default/hummingbird-printed-t-shirt.jpg" alt="">
+                            @foreach(var img in @car.Img)
+                            {
+                                <img src="~/img/@img.PhotoPath" alt="">
+                            }
                         </div>
                         <div class="car-card__text">
                             <h5>@car.Model @car.Name</h5>

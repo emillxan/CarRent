@@ -72,11 +72,4 @@
 
     })
 
-
-
-
-    $('body').on('click', '.all-car .edit-car', function () {
-        event.preventDefault()
-        $('.modal-edit-car').show(1000)
-    })
 })

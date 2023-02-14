@@ -1,4 +1,6 @@
-﻿using CarRent.DAL.Interfaces;
+﻿using Azure;
+using CarRent.DAL.Interfaces;
+using CarRent.Domain.Entity;
 using CarRent.Domain.ViewModels.Car;
 using CarRent.Service.Interfaces;
 using Microsoft.AspNetCore.Authorization;
@@ -25,7 +27,7 @@ namespace CarRent.Controllers
             {
                 return View("GetCars", response.Data);
             }
-
+            
             return View("Error", $"{response.Description}");
         }
 
@@ -51,9 +53,8 @@ namespace CarRent.Controllers
             var response = await _carService.GetCar(id);
             if (response.StatusCode == Domain.Enum.StatusCode.OK)
             {
-                return PartialView(response.Data);
+                return View("Save", response.Data);
             }
-            ModelState.AddModelError("", response.Description);
             return PartialView();
         }
 
@@ -62,18 +63,37 @@ namespace CarRent.Controllers
         {
             ModelState.Remove("Id");
 
-            if (ModelState.IsValid)
+            if (viewModel.Id == 0)
             {
-                if (viewModel.Id == 0)
-                {
-                    await _carService.Create(viewModel, null);
-                }
-                else
-                {
-                    await _carService.Edit(viewModel.Id, viewModel);
-                }
+                await _carService.Create(viewModel, null);
             }
-            return RedirectToAction("GetCars");
+            else
+            {
+                await _carService.Edit(viewModel.Id, viewModel);
+            }
+
+            return RedirectToAction("AllCar");
+        }
+
+
+        [HttpGet]
+        public async Task<IActionResult> Create()
+        {
+            return View("Create");
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> Create(CarViewModel viewModel, IFormFile CarPhoto)
+        {
+            await _carService.Create(viewModel, CarPhoto);
+
+            return RedirectToAction("AllCar");
+        }
+
+        public async Task<IActionResult> DeletImg(long id)
+        {
+            return RedirectToAction("Save" + "/" + id);
         }
 
         [HttpGet]
@@ -99,6 +119,8 @@ namespace CarRent.Controllers
 
             return View("Error", $"{response.Description}");
         }
+        
+
 
 
         [HttpGet]
