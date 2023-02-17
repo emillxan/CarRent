@@ -17,7 +17,7 @@
 </header>
 <main>
     <section class="edit-car">
-        <form method="post" class="container enctype="multipart/form-data" asp-controller="Car" asp-action="Create" asp-antiforgery="true">
+        <form method="post" class="container" enctype="multipart/form-data" asp-controller="Car" asp-action="Create" asp-antiforgery="true">
             <div class="row">
                 <div class="input-box">
                     <p>Name</p>
@@ -65,7 +65,7 @@
             </div>
             <div class="all-img">
                 <p>All Img</p>
-                <input type="file"  asp-for="@Model.CarPhotos">
+                <input type="file" name="CarPhoto">
                 <div class="img-box">
 
                 </div>
