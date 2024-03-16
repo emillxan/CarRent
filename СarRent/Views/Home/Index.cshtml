@@ -12,11 +12,10 @@
             <li><a href="~/Car/GetCars">Our Car</a></li>
             <li><a href="~/Home/About">About</a></li>
             <li><a href="~/Home/Contact">Contact</a></li>
-            @if (User.IsInRole("Admin"))
-            {
+   
                 <li><a href="~/Car/AllCar">All Cars</a></li>
                 <li><a href="~/Users/AllUsers">All Users</a></li>
-            }
+            
         </ul>
         @if (User.Identity.IsAuthenticated)
         {

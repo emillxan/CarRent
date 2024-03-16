@@ -19,20 +19,57 @@ namespace CarRent.Controllers
         }
 
 
+        //[HttpGet]
+        /*        public IActionResult GetCars()
+                {
+                    //var response = _carService.GetCars();
+                    if (response.StatusCode == Domain.Enum.StatusCode.OK)
+                    {
+                        return View("GetCars", response.Data);
+                    }
+
+                    return View("Error", $"{response.Description}");
+                }*/
+
         [HttpGet]
-        public IActionResult GetCars()
+        public async Task<IActionResult> GetCars()
         {
-            var response = _carService.GetCars();
-            if (response.StatusCode == Domain.Enum.StatusCode.OK)
+            int pageIndex = 0;
+            int pageSize = 10;
+            var result = await _carService.GetByPage(pageIndex, pageSize);
+            return View(result.Data);
+        }
+
+        // [FromBody]
+
+        [HttpPost]
+        public JsonResult PostTest([FromBody] string carFilters)
+        {
+            return Json(carFilters);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> GetCars([FromBody] string carFilters)
+        {
+            int pageIndex = 0; int pageSize = 10;
+            //var result = await _carService.GetByPage(carFilters, pageIndex, pageSize);
+            //return View(result.Data);
+            return View('d');
+
+/*            if (result.IsSuccess)
             {
-                return View("GetCars", response.Data);
+                 // Возвращаем представление с данными о машинах
             }
-            
-            return View("Error", $"{response.Description}");
+            else
+            {
+                // Если возникла ошибка, отображаем сообщение об ошибке
+                ViewBag.ErrorMessage = result.Description;
+                return View("Error");
+            }*/
         }
 
 
-        public async Task<IActionResult> Delete(int id)
+/*        public async Task<IActionResult> Delete(int id)
         {
             var response = await _carService.DeleteCar(id);
             if (response.StatusCode == Domain.Enum.StatusCode.OK)
@@ -41,11 +78,11 @@ namespace CarRent.Controllers
             }
             Console.WriteLine(response.Description);
             return RedirectToAction("Index", "Home");
-        }
+        }*/
 
         //public IActionResult Compare() => PartialView();
 
-        [HttpGet]
+/*        [HttpGet]
         public async Task<IActionResult> Save(int id)
         {
             if (id == 0) return PartialView();
@@ -56,7 +93,7 @@ namespace CarRent.Controllers
                 return View("Save", response.Data);
             }
             return PartialView();
-        }
+        }*/
 
         [HttpPost]
         public async Task<IActionResult> Save(CarViewModel viewModel)
@@ -65,7 +102,7 @@ namespace CarRent.Controllers
 
             if (viewModel.Id == 0)
             {
-                await _carService.Create(viewModel, null);
+                //await _carService.Create(viewModel, null);
             }
             else
             {
@@ -75,18 +112,16 @@ namespace CarRent.Controllers
             return RedirectToAction("AllCar");
         }
 
-
         [HttpGet]
         public async Task<IActionResult> Create()
         {
             return View("Create");
         }
 
-
         [HttpPost]
         public async Task<IActionResult> Create(CarViewModel viewModel, IFormFile CarPhoto)
         {
-            await _carService.Create(viewModel, CarPhoto);
+            //await _carService.Create(viewModel, CarPhoto);
 
             return RedirectToAction("AllCar");
         }
@@ -96,7 +131,7 @@ namespace CarRent.Controllers
             return RedirectToAction("Save" + "/" + id);
         }
 
-        [HttpGet]
+/*        [HttpGet]
         public async Task<ActionResult> GetCar(int id)
         {
             var response = await _carService.GetCar(id);
@@ -106,9 +141,9 @@ namespace CarRent.Controllers
                 return View("GetCar", response.Data);
             }
             return View("Error", $"{response.Description}");
-        }
+        }*/
 
-        [HttpGet]
+/*        [HttpGet]
         public IActionResult AllCar()
         {
             var response =  _carService.GetCars();
@@ -118,12 +153,9 @@ namespace CarRent.Controllers
             }
 
             return View("Error", $"{response.Description}");
-        }
-        
+        }*/
 
-
-
-        [HttpGet]
+/*        [HttpGet]
         public async Task<ActionResult> GetCarSave(int id, bool isJson)
         {
             var response = await _carService.GetCar(id);
@@ -132,15 +164,13 @@ namespace CarRent.Controllers
                 return Json(response.Data);
             }
             return PartialView("Save", response.Data);
-        }
+        }*/
 
-
-
-        [HttpPost]
+/*        [HttpPost]
         public JsonResult GetTypes()
         {
-            var types = _carService.GetTypes();
+            //var types = _carService.GetTypes();
             return Json(types.Data);
-        }
+        }*/
     }
 }

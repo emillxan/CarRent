@@ -1,4 +1,4 @@
-﻿using CarRent.DAL.Interfaces;
+﻿/*using CarRent.DAL.Interfaces;
 using CarRent.Domain.Entity;
 using CarRent.Domain.Enum;
 using CarRent.Domain.Hepler;
@@ -18,10 +18,10 @@ namespace CarRent.Service.Implementations
 {
     public class AccountService : IAccountService
     {
-        private readonly IBaseRepository<Users> _userRepository;
+        private readonly IBaseRepository<User> _userRepository;
         private readonly ILogger<AccountService> _logger;
 
-        public AccountService(IBaseRepository<Users> userRepository, ILogger<AccountService> logger)
+        public AccountService(IBaseRepository<User> userRepository, ILogger<AccountService> logger)
         {
             _userRepository = userRepository;
             _logger = logger;
@@ -31,7 +31,7 @@ namespace CarRent.Service.Implementations
         {
             try
             {
-                var user = await _userRepository.GetAll().FirstOrDefaultAsync(x => x.eMail == model.eMail);
+                var user = await _userRepository.GetAll().FirstOrDefaultAsync(x => x.Email == model.eMail);
                 if (user != null)
                 {
                     return new BaseResponse<ClaimsIdentity>()
@@ -40,12 +40,12 @@ namespace CarRent.Service.Implementations
                     };
                 }
 
-                user = new Users()
+                user = new User()
                 {
                     FirstName = model.FirstName,
                     SecondName = model.SecondName,
-                    eMail = model.eMail,
-                    Role = Role.User,
+
+                    Role = UserRole.User,
                     Password = HashPasswordHelper.HashPassowrd(model.Password),
                 };
 
@@ -75,7 +75,7 @@ namespace CarRent.Service.Implementations
         {
             try
             {
-                var user = await _userRepository.GetAll().FirstOrDefaultAsync(x => x.eMail == model.eMail);
+                var user = await _userRepository.GetAll().FirstOrDefaultAsync(x => x.Email == model.eMail);
                 if (user == null)
                 {
                     return new BaseResponse<ClaimsIdentity>()
@@ -114,7 +114,7 @@ namespace CarRent.Service.Implementations
         {
             try
             {
-                var user = await _userRepository.GetAll().FirstOrDefaultAsync(x => x.eMail == model.eMail);
+                var user = await _userRepository.GetAll().FirstOrDefaultAsync(x => x.Email == model.eMail);
                 if (user == null)
                 {
                     return new BaseResponse<bool>()
@@ -146,11 +146,11 @@ namespace CarRent.Service.Implementations
             }
         }
 
-        private ClaimsIdentity Authenticate(Users user)
+        private ClaimsIdentity Authenticate(User user)
         {
             var claims = new List<Claim>
             {
-                new Claim(ClaimsIdentity.DefaultNameClaimType, user.eMail),
+                new Claim(ClaimsIdentity.DefaultNameClaimType, user.Email),
                 new Claim(ClaimsIdentity.DefaultRoleClaimType, user.Role.ToString())
             };
             return new ClaimsIdentity(claims, "ApplicationCookie",
@@ -158,3 +158,4 @@ namespace CarRent.Service.Implementations
         }
     }
 }
+*/

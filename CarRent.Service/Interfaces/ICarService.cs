@@ -1,4 +1,5 @@
 ﻿using CarRent.Domain.Entity;
+using CarRent.Domain.PagedLists;
 using CarRent.Domain.Response;
 using CarRent.Domain.ViewModels;
 using CarRent.Domain.ViewModels.Car;
@@ -13,18 +14,16 @@ namespace CarRent.Service.Interfaces
 {
     public interface ICarService
     {
-        BaseResponse<Dictionary<int, string>> GetTypes();
+        //BaseResponse<Dictionary<int, string>> GetTypes();
 
-        IBaseResponse<List<Car>> GetCars();
+        //IBaseResponse<List<Car>> GetCars();
 
-        Task<IBaseResponse<CarViewModel>> GetCar(long id);
-
-        Task<BaseResponse<Dictionary<long, string>>> GetCar(string term);
-
-        Task<IBaseResponse<Car>> Create(CarViewModel car, IFormFile CarPhoto);
-
-        Task<IBaseResponse<bool>> DeleteCar(long id);
-
+        //Task<BaseResponse<Dictionary<long, string>>> GetCar(string term);
+        Task<IBaseResponse<CarViewModel>> GetById(long id);
+        Task<IBaseResponse<IPagedList<CarViewModel>>> GetByPage(CarFilters carFilters, int pageIndex, int pageSize);
+        Task<IBaseResponse<IPagedList<CarViewModel>>> GetByPage(int pageIndex, int pageSize);
+        Task<IBaseResponse<Car>> Create(CarViewModel car);
+        Task<IBaseResponse<bool>> Delete(long id);
         Task<IBaseResponse<Car>> Edit(long id, CarViewModel model);
     }
 }

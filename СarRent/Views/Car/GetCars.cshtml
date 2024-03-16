@@ -1,10 +1,12 @@
 ﻿@using CarRent.Domain.ViewModels.Car
-@model List<CarRent.Domain.Entity.Car>
+@model CarRent.Domain.PagedLists.PagedList<CarViewModel>
+
 
 @{
-    ViewBag.Title = "title";
+    ViewBag.Title = "Future Cars";
     Layout = "_Layout";
 }
+
 
 <header>
     <nav>
@@ -89,6 +91,72 @@
                 </div>
             </div>
         </section>
+        <div id="filters">
+            <label for="brand">Brand:</label>
+            <input type="text" id="brand"><br>
+
+            <label for="model">Model:</label>
+            <input type="text" id="model"><br>
+
+            <label for="minPrice">Min Price:</label>
+            <input type="number" id="minPrice"><br>
+
+            <label for="maxPrice">Max Price:</label>
+            <input type="number" id="maxPrice"><br>
+
+            <label for="bodyType">Body Type:</label>
+            <select id="bodyType">
+                <option value="">Any</option>
+                <option value="Sedan">Sedan</option>
+                <option value="Hatchback">Hatchback</option>
+                <option value="SUV">SUV</option>
+                <!-- Добавьте другие варианты кузова здесь -->
+            </select><br>
+
+            <label for="minEngineVolume">Min Engine Volume:</label>
+            <input type="number" id="minEngineVolume"><br>
+
+            <label for="maxEngineVolume">Max Engine Volume:</label>
+            <input type="number" id="maxEngineVolume"><br>
+
+            <label for="transmissionType">Transmission Type:</label>
+            <select id="transmissionType">
+                <option value="">Any</option>
+                <option value="Manual">Manual</option>
+                <option value="Automatic">Automatic</option>
+                <!-- Добавьте другие варианты типа трансмиссии здесь -->
+            </select><br>
+
+            <label for="color">Color:</label>
+            <input type="text" id="color"><br>
+
+            <label for="minMileage">Min Mileage:</label>
+            <input type="number" id="minMileage"><br>
+
+            <label for="maxMileage">Max Mileage:</label>
+            <input type="number" id="maxMileage"><br>
+
+            <label for="minYearOfProduction">Min Year of Production:</label>
+            <input type="number" id="minYearOfProduction"><br>
+
+            <label for="maxYearOfProduction">Max Year of Production:</label>
+            <input type="number" id="maxYearOfProduction"><br>
+
+            <label for="fuelType">Fuel Type:</label>
+            <select id="fuelType">
+                <option value="">Any</option>
+                <option value="Gasoline">Gasoline</option>
+                <option value="Diesel">Diesel</option>
+                <option value="Electric">Electric</option>
+                <!-- Добавьте другие варианты типа топлива здесь -->
+            </select><br>
+
+            <label for="availableForRent">Available For Rent:</label>
+            <input type="checkbox" id="availableForRent"><br>
+
+            <button id="applyFilters">Apply Filters</button>
+        </div>
+
         <section class="our-car__shop-box">
             <div class="our-car__shop-box-top">
                 <div class="top-filter">
@@ -110,27 +178,28 @@
                 </div>
             </div>
             <div class="our-car__shop-card-box">
-                @foreach(var car in Model)
+                @foreach (var car in Model.Items)
                 {
                     <div class="car-card sm">
                         <div class="car-card__top">
-                            @foreach(var img in @car.Img)
-                            {
-                                <img src="~/img/@img.PhotoPath" alt="">
-                            }
+                            <!-- Вывод изображения машины -->
+                            @* <img src="@car.ImageUrl" alt="Car Image"> *@
                         </div>
                         <div class="car-card__text">
-                            <h5>@car.Model @car.Name</h5>
+                            <!-- Вывод модели и названия машины -->
+                            <h5>@car.Model - @car.Brand</h5>
+                            <!-- Вывод остальной информации о машине -->
                             <p class="price">$@car.Price <span>/Day</span></p>
                             <ul>
-                                <li>Prices of Luggage: @car.PiecesOfLuggage</li>
-                                <li>Doors: @car.Doors</li>
-                                <li>Maximum Passenger: @car.MaxPassenger</li>
+                                <li>Body Type: @car.BodyType</li>
+                                <li>Transmission Type: @car.TransmissionType</li>
+                                <li>Speed: @car.MaxSpeed mph</li>
                             </ul>
-                            <a href="~/Car/GetCar/@car.Id" >VIEW DETAILS</a>
+                            <!-- Ссылка для просмотра деталей машины -->
+                            <a href="~/Car/GetCar/@car.Id">VIEW DETAILS</a>
                         </div>
                     </div>
-                }               
+                }
             </div>
             <div class="our-car__shop-box-bottom">
                 <p>Showing 1-8 of 11 item(s)</p>
@@ -141,5 +210,58 @@
                 </ul>
             </div>
         </section>
+
+        <script>
+            document.getElementById("applyFilters").addEventListener("click", function () {
+                var filters = {
+                    'Brand': document.getElementById("brand").value,
+                    'Model': document.getElementById("model").value,
+                    'MinPrice': parseFloat(document.getElementById("minPrice").value),
+                    'MaxPrice': parseFloat(document.getElementById("maxPrice").value),
+                    'BodyType': document.getElementById("bodyType").value,
+                    'MinEngineVolume': parseFloat(document.getElementById("minEngineVolume").value),
+                    'MaxEngineVolume': parseFloat(document.getElementById("maxEngineVolume").value),
+                    'TransmissionType': document.getElementById("transmissionType").value,
+                    'Color': document.getElementById("color").value,
+                    'MinMileage': parseInt(document.getElementById("minMileage").value),
+                    'MaxMileage': parseInt(document.getElementById("maxMileage").value),
+                    'MinYearOfProduction': parseInt(document.getElementById("minYearOfProduction").value),
+                    'MaxYearOfProduction': parseInt(document.getElementById("maxYearOfProduction").value),
+                    'FuelType': document.getElementById("fuelType").value,
+                    'AvailableForRent': document.getElementById("availableForRent").checked
+                };
+
+                //var pageIndex = 0; // Здесь нужно получить значение ID страницы
+                //var pageSize = 10; // Здесь нужно получить значение количества элементов
+
+                //filters.pageIndex = pageIndex;
+                //filters.pageSize = pageSize;
+
+                console.log(filters);
+                var f = {'Brand': 'Muay'}
+                fetch("/car/GetCars", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: f
+                })
+                    .then(response => {
+                        console.log('eURA')
+                        if (!response.ok) {
+                            throw new Error("Network response was not ok");
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        // Обрабатываем ответ от сервера
+                        console.log(data);
+                    })
+                    .catch(error => {
+                        console.log('EROR')
+                        console.error("Error fetching filtered cars:", error);
+                    });
+            });
+        </script>
     </section>
 </main>

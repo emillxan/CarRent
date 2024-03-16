@@ -1,35 +1,32 @@
-﻿using CarRent.DAL.Interfaces;
+﻿using AutoMapper;
+using CarRent.DAL.Interfaces;
 using CarRent.Domain.Entity;
 using CarRent.Domain.Enum;
 using CarRent.Domain.Extensions;
+using CarRent.Domain.PagedLists;
 using CarRent.Domain.Response;
 using CarRent.Domain.ViewModels.Car;
 using CarRent.Service.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.IO.Enumeration;
-using System.Linq;
-using System.Runtime.ConstrainedExecution;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
+
 
 namespace CarRent.Service.Implementations
 {
     public class CarService : ICarService
     {
         private readonly IBaseRepository<Car> _carRepository;
-        private readonly IBaseRepository<CarPhotos> _carPhotosRepository;
+        private readonly IBaseRepository<CarPhoto> _carPhotosRepository;
+        private readonly IMapper _mapper;
 
         public CarService(IBaseRepository<Car> carRepository,
-            IBaseRepository<CarPhotos> carPhotosRepository)
+            IBaseRepository<CarPhoto> carPhotosRepository,
+            IMapper mapper)
         {
             _carRepository = carRepository;
             _carPhotosRepository = carPhotosRepository;
+            _mapper = mapper;
         }
 
         
@@ -56,7 +53,6 @@ namespace CarRent.Service.Implementations
                 };
             }
         }
-
         public async Task<IBaseResponse<CarViewModel>> GetCar(long id)
         {
             try
@@ -74,17 +70,7 @@ namespace CarRent.Service.Implementations
 
                 var data = new CarViewModel()
                 {
-                    Name = car.Name,
-                    Model = car.Model,
-                    Description = car.Description,
-                    Speed = car.Speed,
-                    TypeCar = car.TypeCar.GetDisplayName(),
-                    Price = car.Price,
-                    PiecesOfLuggage = car.PiecesOfLuggage,
-                    AutomaticTransmission = car.AutomaticTransmission,
-                    Doors = car.Doors,
-                    MaxPassenger = car.MaxPassenger,
-                    CarPhotos = img.ToList()
+                    Model = car.Model
                 };
 
                 return new BaseResponse<CarViewModel>()
@@ -102,26 +88,16 @@ namespace CarRent.Service.Implementations
                 };
             }
         }
-
         public async Task<BaseResponse<Dictionary<long, string>>> GetCar(string term)
         {
-            var baseResponse = new BaseResponse<Dictionary<long, string>>();
+            /*var baseResponse = new BaseResponse<Dictionary<long, string>>();
             try
             {
                 var cars = await _carRepository.GetAll()
                     .Select(x => new CarViewModel()
                     {
                         Id = x.Id,
-                        Name = x.Name,
                         Model = x.Model,
-                        Description = x.Description,
-                        Speed = x.Speed,
-                        TypeCar = x.TypeCar.GetDisplayName(),
-                        Price = x.Price,
-                        PiecesOfLuggage = x.PiecesOfLuggage,
-                        AutomaticTransmission = x.AutomaticTransmission,
-                        Doors = x.Doors,
-                        MaxPassenger = x.MaxPassenger
                     })
                     .Where(x => EF.Functions.Like(x.Name, $"%{term}%"))
                     .ToDictionaryAsync(x => x.Id, t => t.Name);
@@ -136,29 +112,23 @@ namespace CarRent.Service.Implementations
                     Description = ex.Message,
                     StatusCode = StatusCode.InternalServerError
                 };
-            }
+            }*/
+            return new BaseResponse<Dictionary<long, string>>()
+            {
+                StatusCode = StatusCode.InternalServerError
+            };
         }
-
         public async Task<IBaseResponse<Car>> Create(CarViewModel model, IFormFile CarPhoto)
         {
             try
             {
                 var car = new Car()
                 {
-                    Name = model.Name,
                     Model = model.Model,
-                    Description = model.Description,
-                    Speed = model.Speed,
-                    TypeCar = (TypeCar)Convert.ToInt32(model.TypeCar),
-                    Price = model.Price,
-                    PiecesOfLuggage = model.PiecesOfLuggage,
-                    AutomaticTransmission = model.AutomaticTransmission,
-                    Doors = model.Doors,
-                    MaxPassenger = model.MaxPassenger
                 };
                 await _carRepository.Create(car);
 
-                var CarPphoto = new CarPhotos() 
+/*                var CarPphoto = new CarPhoto() 
                 { 
                     CarId = model.Id,
                     PhotoPath = CarPhoto.FileName
@@ -169,7 +139,7 @@ namespace CarRent.Service.Implementations
                 using(Stream stream = new FileStream("wwwroot/img/" + fileName, FileMode.Create))
                 {
                     CarPhoto.CopyTo(stream);
-                }
+                }*/
 
                 return new BaseResponse<Car>()
                 {
@@ -186,7 +156,6 @@ namespace CarRent.Service.Implementations
                 };
             }
         }
-
         public async Task<IBaseResponse<bool>> DeleteCar(long id)
         {
             try
@@ -225,11 +194,185 @@ namespace CarRent.Service.Implementations
             }
         }
 
+
+
+
+        public async Task<IBaseResponse<CarViewModel>> GetById(long id)
+        {
+            try
+            {
+                var car = await _carRepository.GetFirstOrDefaultAsync(
+                    selector: car => car, 
+                    predicate: car => car.Id == id
+                    );
+                //var img = _carPhotosRepository.GetAll().ToList().Where(x => x.CarId == id);
+
+                if (car == null)
+                {
+                    return new BaseResponse<CarViewModel>()
+                    {
+                        Description = "Машина не найдена",
+                        StatusCode = StatusCode.UserNotFound
+                    };
+                }
+
+                var carVm = _mapper.Map<CarViewModel>(car);
+
+                return new BaseResponse<CarViewModel>()
+                {
+                    StatusCode = StatusCode.OK,
+                    Data = carVm
+                };
+            }
+            catch (Exception ex)
+            {
+                return new BaseResponse<CarViewModel>()
+                {
+                    Description = $"[GetCar] : {ex.Message}",
+                    StatusCode = StatusCode.InternalServerError
+                };
+            }
+        }
+
+        public async Task<IBaseResponse<IPagedList<CarViewModel>>> GetByPage(CarFilters carFilters, int pageIndex, int pageSize)
+        {
+            try
+            {
+                var carsPage = await _carRepository.GetPagedListAsync(
+                    selector: car => car,
+                    pageIndex: pageIndex,
+                    pageSize: pageSize,
+                    predicate: car =>
+                        (string.IsNullOrEmpty(carFilters.Brand) || car.Brand == carFilters.Brand) /*&&
+                        (string.IsNullOrEmpty(carFilters.Model) || car.Model == carFilters.Model) &&
+                        (!carFilters.MinPrice.HasValue || car.RentalPricePerDay >= carFilters.MinPrice) &&
+                        (!carFilters.MaxPrice.HasValue || car.RentalPricePerDay <= carFilters.MaxPrice) &&
+                        (!carFilters.BodyType.HasValue || car.BodyType == carFilters.BodyType) &&
+                        (!carFilters.MinEngineVolume.HasValue || car.EngineVolume >= carFilters.MinEngineVolume) &&
+                        (!carFilters.MaxEngineVolume.HasValue || car.EngineVolume <= carFilters.MaxEngineVolume) &&
+                        (!carFilters.TransmissionType.HasValue || car.TransmissionType == carFilters.TransmissionType) &&
+                        (string.IsNullOrEmpty(carFilters.Color) || car.Color == carFilters.Color) &&
+                        (!carFilters.MinMileage.HasValue || car.Mileage >= carFilters.MinMileage) &&
+                        (!carFilters.MaxMileage.HasValue || car.Mileage <= carFilters.MaxMileage) &&
+                        (!carFilters.MinYearOfProduction.HasValue || car.YearOfProduction >= carFilters.MinYearOfProduction) &&
+                        (!carFilters.MaxYearOfProduction.HasValue || car.YearOfProduction <= carFilters.MaxYearOfProduction) &&
+                        (!carFilters.FuelType.HasValue || car.FuelType == carFilters.FuelType) &&
+                        (!carFilters.AvailableForRent.HasValue || car.AvailableForRent == carFilters.AvailableForRent)*/
+                    );
+
+                if (carsPage == null)
+                {
+                    return new BaseResponse<IPagedList<CarViewModel>>()
+                    {
+                        Description = "Машина не найдена",
+                        StatusCode = StatusCode.UserNotFound
+                    };
+                }
+
+                var carVmList = _mapper.Map<IEnumerable<Car>, IEnumerable<CarViewModel>>(carsPage.Items);
+                var pagedCarVm = new PagedList<CarViewModel>(
+                    carVmList.ToList(),
+                    pageIndex,
+                    pageSize,
+                    carsPage.IndexFrom,
+                    carsPage.TotalCount
+                );
+
+                return new BaseResponse<IPagedList<CarViewModel>>()
+                {
+                    StatusCode = StatusCode.OK,
+                    Data = pagedCarVm
+                };
+            }
+            catch (Exception ex)
+            {
+                return new BaseResponse<IPagedList<CarViewModel>>()
+                {
+                    Description = $"[GetCar] : {ex.Message}",
+                    StatusCode = StatusCode.InternalServerError
+                };
+            }
+        }
+
+        public async Task<IBaseResponse<IPagedList<CarViewModel>>> GetByPage(int pageIndex, int pageSize)
+        {
+            try
+            {
+                var carsPage = await _carRepository.GetPagedListAsync(
+                    selector: car => car,
+                    pageIndex: pageIndex,
+                    pageSize: pageSize
+                    );
+
+                if (carsPage == null)
+                {
+                    return new BaseResponse<IPagedList<CarViewModel>>()
+                    {
+                        Description = "Машина не найдена",
+                        StatusCode = StatusCode.UserNotFound
+                    };
+                }
+
+                var carVmList = _mapper.Map<IEnumerable<Car>, IEnumerable<CarViewModel>>(carsPage.Items);
+                var pagedCarVm = new PagedList<CarViewModel>(
+                    carVmList.ToList(),
+                    pageIndex,
+                    pageSize,
+                    carsPage.IndexFrom,
+                    carsPage.TotalCount
+                );
+
+                return new BaseResponse<IPagedList<CarViewModel>>()
+                {
+                    StatusCode = StatusCode.OK,
+                    Data = pagedCarVm
+                };
+            }
+            catch (Exception ex)
+            {
+                return new BaseResponse<IPagedList<CarViewModel>>()
+                {
+                    Description = $"[GetCar] : {ex.Message}",
+                    StatusCode = StatusCode.InternalServerError
+                };
+            }
+        }
+
+        public async Task<IBaseResponse<Car>> Create(CarViewModel carViewModel)
+        {
+            try
+            {
+                var car = _mapper.Map<Car>(carViewModel);
+
+                car.IsDeleted = false;
+
+                var createdCar = await _carRepository.InsertAsync(car);
+
+                return new BaseResponse<Car>
+                {
+                    StatusCode = StatusCode.OK,
+                    Data = car,
+                    Description = "Car created successfully."
+                };
+            }
+            catch (Exception ex)
+            {
+                return new BaseResponse<Car>
+                {
+                    StatusCode = StatusCode.InternalServerError,
+                    Description = $"Failed to create car: {ex.Message}"
+                };
+            }
+        }
+
         public async Task<IBaseResponse<Car>> Edit(long id, CarViewModel model)
         {
             try
             {
-                var car = await _carRepository.GetAll().FirstOrDefaultAsync(x => x.Id == id);
+                var car = await _carRepository.GetFirstOrDefaultAsync(
+                    selector: car => car,
+                    predicate: car => car.Id == id
+                    );
                 if (car == null)
                 {
                     return new BaseResponse<Car>()
@@ -239,16 +382,9 @@ namespace CarRent.Service.Implementations
                     };
                 }
 
-                car.Name = model.Name;
+
                 car.Model = model.Model;
-                car.Description = model.Description;
-                car.Speed = model.Speed;
-                //car.TypeCar = model.TypeCar;
-                car.Price = model.Price;
-                car.PiecesOfLuggage = model.PiecesOfLuggage;
-                car.AutomaticTransmission = model.AutomaticTransmission;
-                car.Doors = model.Doors;
-                car.MaxPassenger = car.MaxPassenger;
+
 
                 await _carRepository.Update(car);
 
@@ -269,43 +405,42 @@ namespace CarRent.Service.Implementations
             }
         }
 
-        public IBaseResponse<List<Car>> GetCars()
+        public async Task<IBaseResponse<bool>> Delete(long id)
         {
             try
             {
-                var cars = _carRepository.GetAll().ToList();
-                foreach(var item in cars)
-                {
-                    var img = _carPhotosRepository.GetAll().ToList().Where(x => x.CarId == item.Id);
-                    item.Img = img.ToList();
-                }
+                var car = await _carRepository.GetFirstOrDefaultAsync(
+                    selector: car => car,
+                    predicate: car => car.Id == id
+                    );
 
-                if (!cars.Any())
+                if (car == null)
                 {
-                    return new BaseResponse<List<Car>>()
+                    return new BaseResponse<bool>
                     {
-                        Description = "Найдено 0 элементов",
-                        StatusCode = StatusCode.OK
+                        StatusCode = StatusCode.OK,
+                        Description = $"Car with id {id} not found."
                     };
                 }
 
-                return new BaseResponse<List<Car>>()
+                car.IsDeleted = true;
+
+                await _carRepository.UpdateAsync(car);
+
+                return new BaseResponse<bool>
                 {
-                    Data = cars,
-                    StatusCode = StatusCode.OK
+                    StatusCode = StatusCode.OK,
+                    Description = "Car deleted successfully."
                 };
             }
             catch (Exception ex)
             {
-                return new BaseResponse<List<Car>>()
+                return new BaseResponse<bool>
                 {
-                    Description = $"[GetCars] : {ex.Message}",
-                    StatusCode = StatusCode.InternalServerError
+                    StatusCode = StatusCode.InternalServerError,
+                    Description = $"Failed to delete car: {ex.Message}"
                 };
             }
         }
-
-
-
     }
 }

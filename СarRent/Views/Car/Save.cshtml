@@ -21,7 +21,7 @@
             <div class="row">
                 <div class="input-box">
                     <p>Name</p>
-                    <input type="text" asp-for="@Model.Name">
+                    @* <input type="text" asp-for="@Model.Name"> *@
                 </div>
                 <div class="input-box">
                     <p>Model</p>
@@ -42,7 +42,7 @@
                     <input type="text" asp-for="@Model.Price">
                 </div>
             </div>
-            <div class="row">
+@*             <div class="row">
                 <div class="input-box">
                     <p>PiecesOfLuggage</p>
                     <input type="text" asp-for="@Model.PiecesOfLuggage">
@@ -71,12 +71,12 @@
                     @foreach (var img in Model.CarPhotos)
                     {
                         <a href="~/Car/DeletImg/@img.Id">
-                            <img src="~/img/@img.PhotoPath" alt="">
+                             <img src="~/img/@img.PhotoPath" alt=""> 
                         </a>
                     }
                 </div>
                 <a href="" class="add-img">Add Img</a>
-            </div>
+            </div> *@
             <button type="submit">Edit</button>
         </form>
     </section>

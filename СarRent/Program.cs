@@ -8,6 +8,7 @@ using CarRent.Service.Interfaces;
 using CarRent.Service.Implementations;
 using CarRent.Domain.Entity;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using CarRent.Domain.Mappings;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,14 +22,15 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         options.AccessDeniedPath = new Microsoft.AspNetCore.Http.PathString("/Account/Login");
     });
 
+builder.Services.AddAutoMapper(typeof(CarProfile));
+
 builder.Services.AddScoped<IBaseRepository<Car>, CarRepository>();
-builder.Services.AddScoped<IBaseRepository<Users>, UsersRepository>();
-builder.Services.AddScoped<IBaseRepository<Profile>, ProfileRepository>();
-builder.Services.AddScoped<IBaseRepository<CarPhotos>, CarPhotosRepository>();
+
+builder.Services.AddScoped<IBaseRepository<CarPhoto>, CarPhotosRepository>();
 
 builder.Services.AddScoped<ICarService, CarService>();
-builder.Services.AddScoped<IAccountService, AccountService>();
-builder.Services.AddScoped<IProfileService, ProfileService>();
+//builder.Services.AddScoped<IAccountService, AccountService>();
+
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();

@@ -1,4 +1,4 @@
-﻿using CarRent.Domain.Response;
+﻿/*using CarRent.Domain.Response;
 using CarRent.Domain.ViewModels.Account;
 using System;
 using System.Collections.Generic;
@@ -17,4 +17,4 @@ namespace CarRent.Service.Interfaces
 
         Task<BaseResponse<bool>> ChangePassword(ChangePasswordViewModel model);
     }
-}
+}*/

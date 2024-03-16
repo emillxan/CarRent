@@ -1,4 +1,4 @@
-﻿using CarRent.Domain.ViewModels.Account;
+﻿/*using CarRent.Domain.ViewModels.Account;
 using CarRent.Service.Interfaces;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
@@ -84,3 +84,4 @@ namespace СarRent.Controllers
         }
     }
 }
+*/

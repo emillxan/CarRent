@@ -1,36 +1,24 @@
 ﻿using CarRent.Domain.Enum;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace CarRent.Domain.Entity
+namespace CarRent.Domain.Entity;
+
+public class Car
 {
-    public class Car
-    {
-        public long Id { get; set; }
+    public long Id { get; set; } // Уникальный идентификатор автомобиля
+    public string? Brand { get; set; } // Марка автомобиля
+    public string? Model { get; set; } // Модель автомобиля
+    public decimal? RentalPricePerDay { get; set; } // Стоимость аренды за день
+    public BodyType? BodyType { get; set; } // Тип кузова автомобиля
+    public double? EngineVolume { get; set; } // Объем двигателя автомобиля
+    public TransmissionType? TransmissionType { get; set; } // Тип трансмиссии автомобиля
+    public string? Color { get; set; } // Цвет автомобиля
+    public int? Mileage { get; set; } // Пробег автомобиля
+    public int? MaxSpeed { get; set; } // Максимальная скорость автомобиля
+    public int? YearOfProduction { get; set; } // Год производства автомобиля
+    public FuelType? FuelType { get; set; } // Тип потребляемого топлива
+    public bool? AvailableForRent { get; set; } // Доступен для аренды
+    public bool? IsDeleted { get; set; }
 
-        public string Name { get; set; }
-
-        public string Description { get; set; }
-
-        public string Model { get; set; }
-
-        public decimal Price { get; set; }
-
-        public int Speed { get; set; }
-
-        public int PiecesOfLuggage { get; set; }
-
-        public int Doors { get; set; }
-
-        public bool AutomaticTransmission { get; set; }
-
-        public int MaxPassenger { get; set; }
-
-        public TypeCar TypeCar { get; set; }
-
-        public List<CarPhotos> Img { get; set; }
-    }
+    public List<CarPhoto> Photos { get; set; }
+    public List<Rental> Rentals { get; set; }
 }

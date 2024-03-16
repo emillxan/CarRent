@@ -1,36 +1,20 @@
-﻿using CarRent.Domain.Entity;
-using CarRent.Domain.Enum;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using CarRent.Domain.Enum;
 
-namespace CarRent.Domain.ViewModels.Car
+namespace CarRent.Domain.ViewModels.Car;
+
+public class CarViewModel
 {
-    public class CarViewModel
-    {
-        public long Id { get; set; }
-        public string Name { get; set; }
+    public long Id { get; set; }
+    public string Brand { get; set; }
+    public string Model { get; set; }
+    public decimal Price { get; set; }
+    public int Year { get; set; }
+    public string Description { get; set; }
+    public string TypeCar { get; set; }
+    public List<string> Photos { get; set; }
 
-        public string Description { get; set; }
-
-        public string Model { get; set; }
-
-        public decimal Price { get; set; }
-
-        public int Speed { get; set; }
-
-        public int PiecesOfLuggage { get; set; }
-
-        public int Doors { get; set; }
-
-        public bool AutomaticTransmission { get; set; }
-
-        public int MaxPassenger { get; set; }
-
-        public string TypeCar { get; set; } 
-
-        public List<CarPhotos> CarPhotos { get; set; }
-    }
+    public FuelType? FuelType { get; set; }
+    public TransmissionType? TransmissionType { get; set; }
+    public BodyType? BodyType { get; set; }
+    public int? MaxSpeed { get; set; }
 }
